@@ -140,6 +140,8 @@ var TypeDesignatorIcons = {
         'MD87': 'jet_swept',
         'MD88': 'jet_swept',
 
+        'DC10': 'heavy_2e', // This is better than the generic icon
+
 
 
         'A37': 'hi_perf',

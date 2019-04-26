@@ -8,6 +8,8 @@ function PlaneObject(icao) {
         this.squawk    = null;
         this.selected  = false;
         this.category  = null;
+        this.isUSMil   = false;    // By default
+        this.onscreen  = false;    // By default
 
 	// Basic location information
         this.altitude       = null;

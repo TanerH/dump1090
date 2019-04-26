@@ -28,7 +28,10 @@ function getAircraftData(icao) {
         var defer;
 
         icao = icao.toUpperCase();
-
+        // Some sanity...
+        if (icao[0] === '~') {
+		icao = icao.substring(1);
+        }
         if (icao in _aircraft_cache) {
                 defer = _aircraft_cache[icao];
         } else {

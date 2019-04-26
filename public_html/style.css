@@ -28,7 +28,7 @@ html, body {
 #sidebar_container {
 	display: flex;
 	flex-direction: column;
-    width: 500px;
+	/* width: 500px; */
 	left: 0 !important;
 	height: 100%;
 }
@@ -188,6 +188,7 @@ div#update_error { position: absolute; bottom: 25px; left: 25px; border: 2px sol
 div#loader { z-index: 99; position: absolute; left: 0; top: 0; bottom: 0; right: 0; background: #000; opacity: 0.8; filter: alpha(opacity=80); }
 #spinny { width: 128px; height: 128px; position: absolute; top: 50%; left: 50%; margin: -64px 0 0 -64px; }
 #loader_progress { width: 250px; height: 20px; position: absolute; top: 50%; left: 50%; margin: 128px 0 0 -125px; }
+#loader_text { font-size: large; font-weight: bold; color: #FFFFFF;  width: 250px; height: 20px; position: absolute; top: 50%; left: 50%; margin: 150px 0 0 -125px; }
 
 #tableinfo { font-size: small; }
 
@@ -223,18 +224,43 @@ div#loader { z-index: 99; position: absolute; left: 0; top: 0; bottom: 0; right:
     text-transform: uppercase;
 }
 
-.vPosition  { background-color: #E5F6FC; }
-.mlat       { background-color: #FDF2E5; }
-.other      { background-color: #CCD5F8; }
-.tisb       { background-color: #FFF3B8; }
+.vPosition   { background-color: #E5F6FC; }
+.mlat        { background-color: #FDF2E5; }
+.other       { background-color: #CCD5F8; }
+.tisb        { background-color: #FFF3B8; }
+
+.usmil       { color: #01aa13; }
+.usmilcell   { 
+    border-top: 2px dashed #11EE33;
+    border-right: 0px;
+    border-bottom: 2px dashed #11EE33;
+    border-left: 0px;
+}
+.usmilcell_L {
+    border-top: 2px dashed #11EE33;
+    border-right: 0px;
+    border-bottom: 2px dashed #11EE33;
+    border-left: 2px dashed #11EE33;
+} 
+.usmilcell_R {
+    border-top: 2px dashed #11EE33;
+    border-right: 2px dashed #11EE33;
+    border-bottom: 2px dashed #11EE33;
+    border-left: 0px;
+} 
+
 .squawk7500 { font-weight: bold; background-color: #ff5555; }
 .squawk7600 { font-weight: bold; background-color: #00ffff; }
 .squawk7700 { font-weight: bold; background-color: #ffff00; }
-.selected   { background-color: #dddddd; }
+
+.selected   { outline: 2px solid black; font-weight: bold; }
+.selectedusmil   { outline: 2px solid #01cc13; font-weight: bold; }
+
 .plane_table_row { 
     cursor: pointer;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
 .hidden { display: none; }
 
 .infoblock_heading    { font-size: larger; }
@@ -351,8 +377,20 @@ select.error, textarea.error, input.error {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 20px;
-    text-indent: 16px;
+    text-indent: 10px;
     color: rgb(0, 0, 0);
+    display: table-cell;
+}
+
+.settingsTextL
+{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    text-indent: 0px;
+    padding-right: 10px;
+    color: rgb(0, 0, 0);
+    display: table-cell;
 }
 
 .link
@@ -420,14 +458,39 @@ select.error, textarea.error, input.error {
     color: #FFFFFF;
     color: rgb(255, 255, 255);
     line-height: 28px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
+.buttonTextSmall
+{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    color: #FFFFFF;
+    color: rgb(255, 255, 255);
+    line-height: 28px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.buttonSmall {
+    background: #00A0E2;
+    background: rgba(0, 160, 226, 1);
+    min-width: 20px;
+    height: 28px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    display: inline-block;
+    margin-right: 2px;
+    cursor: pointer;
+    text-align: center;
+}
 .button {
     background: #00A0E2;
     background: rgba(0, 160, 226, 1);
-    min-width: 80px;
+    min-width: 50px;
     height: 28px;
     border-radius: 4px;
     -moz-border-radius: 4px;
@@ -601,9 +664,9 @@ select.error, textarea.error, input.error {
 
 #settings_infoblock {
     position: absolute;
-    right: 1px;
+    right: 10px;
     top: 60px;
-    width: 398px;
+    width: 550px;
     min-height: 180px;
     background: #ffffff;
     box-shadow: 4px 4px 10px #444444;
@@ -619,6 +682,10 @@ select.error, textarea.error, input.error {
 .settingsOptionContainer {
     display: table;
     padding-bottom: 10px;
+}
+.settingsOptionContainerRow {
+    display: table-row;
+    padding-bottom: 5px;
 }
 
 .settingsCheckbox {
@@ -643,11 +710,6 @@ select.error, textarea.error, input.error {
     width: 20px;
     height: 20px;
     cursor: pointer;
-}
-
-.settingsText {
-    line-height: 20px;
-    display: table-cell;
 }
 
 #altitude_chart {

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<link rel="stylesheet" type="text/css" href="style.css?v=2" />
+		<link rel="stylesheet" type="text/css" href="style.css?v=3a" />
 		<link rel="stylesheet" href="jquery/jquery-ui-1.11.4-smoothness.css" />
 		<script src="jquery/jquery-3.0.0.min.js"></script>
 		<script src="jquery/jquery-ui-1.11.4.min.js"></script>
@@ -15,14 +15,14 @@
                 <script src="ol/ol3-layerswitcher.js" type="text/javascript"></script>
 
 		<script type="text/javascript" src="config.js"></script>
-		<script type="text/javascript" src="markers.js"></script>
-		<script type="text/javascript" src="dbloader.js"></script>
+		<script type="text/javascript" src="markers.js?v=2"></script>
+		<script type="text/javascript" src="dbloader.js?v=2"></script>
 		<script type="text/javascript" src="registrations.js"></script>
-		<script type="text/javascript" src="planeObject.js?v=2"></script>
-		<script type="text/javascript" src="formatter.js?v=2"></script>
+		<script type="text/javascript" src="planeObject.js?v=3"></script>
+		<script type="text/javascript" src="formatter.js?v=3"></script>
 		<script type="text/javascript" src="flags.js"></script>
 		<script type="text/javascript" src="layers.js"></script>
-		<script type="text/javascript" src="script.js?v=2"></script>
+		<script type="text/javascript" src="script.js?v=3"></script>
 		<title>PiAware Skyview</title>
 	</head>
 
@@ -30,6 +30,7 @@
 		<div id="loader" class="hidden">
 			<img src="spinny.gif" id="spinny" alt="Loading...">
 			<progress id="loader_progress"></progress>
+			<div id="loader_text">&nbsp;</div>
 		</div>
 
 		<!--
@@ -104,6 +105,45 @@
 						<option value="imperial">Imperial</option>
 					</select>
 				</div>
+                                <div class="settingsColumn">
+                                        <div class="settingsOptionContainer">
+                                                <div class="infoBlockTitleText">Behavior Toggles</div>
+                                        </div>
+                                        <div class="settingsOptionContainer" align=center>
+                                                <div class="settingsOptionContainerRow"><b>Refresh speed:</b></div>
+                                                <div class="settingsOptionContainer">
+                                                	<div class="settingsCheckbox" id="refresh_fast_checkbox"></div>
+                                                	<div class="settingsTextL">1s</div>
+                                                	<div class="settingsCheckbox" id="refresh_med_checkbox"></div>
+                                                	<div class="settingsTextL">5s</div>
+                                                	<div class="settingsCheckbox" id="refresh_slow_checkbox"></div>
+                                                	<div class="settingsTextL">10s</div>
+						</div>
+                                        </div>
+                                        <div class="settingsOptionContainer">
+                                                <div class="settingsCheckbox" id="nobg_checkbox"></div>
+                                                <div class="settingsText" id="nobg_text">No Background mode</div>
+                                        </div>
+                                        <div class="settingsOptionContainer">
+                                                <div class="settingsCheckbox" id="hide_alt_checkbox"></div>
+                                                <div class="settingsText" id="hide_alt_text">Hide "Altitude" filter</div>
+                                        </div>
+                                        <div class="settingsOptionContainer">
+                                                <div class="settingsCheckbox" id="highlight_us_mil_checkbox"></div>
+                                                <div class="settingsText" id="highlight_us_mil_text">Highlight US Mil craft</div>
+                                        </div>
+                                        <div class="settingsOptionContainer" align=center>
+                                                <div class="settingsOptionContainerRow"><b>Max range ring:</b></div>
+                                                <div class="settingsOptionContainer">
+                                                     <div class="settingsCheckbox" id="range300_checkbox"></div>
+                                                     <div class="settingsTextL">300</div>
+                                                     <div class="settingsCheckbox" id="range400_checkbox"></div>
+                                                     <div class="settingsTextL">400</div>
+                                                     <div class="settingsCheckbox" id="range500_checkbox"></div>
+                                                     <div class="settingsTextL">500</div>
+                                                </div>
+                                        </div>
+                                </div>
 				<div class="settingsColumn">
 					<div class="settingsOptionContainer">
 						<div class="infoBlockTitleText">Overlay Toggles</div>
@@ -114,7 +154,11 @@
 					</div>
 					<div class="settingsOptionContainer">
 						<div class="settingsCheckbox" id="sitepos_checkbox"></div>
-						<div class="settingsText">Site Position and Range Rings</div>
+						<div class="settingsText">Site Position</div>
+					</div>
+					<div class="settingsOptionContainer">
+						<div class="settingsCheckbox" id="rangerings_checkbox"></div>
+						<div class="settingsText">Range Rings</div>
 					</div>
 					<div class="settingsOptionContainer">
 						<div class="settingsCheckbox" id="actrail_checkbox"></div>
@@ -167,42 +211,52 @@
 			<div id="sidebar_container">
 				<div id="splitter" class="ui-resizable-handle ui-resizable-w"></div>
 					<div id="sidebar_canvas">
-							
-							
 					<div id="sidebar-table">
-							<div id="dump1090_infoblock">
-									<table style="width: 100%">
-										<tr class="infoblock_heading">
-											<td>
-												<div class="button buttonTable" id="show_map_button"><span class="buttonText">Show Map</span></div>
-											</td>
-											<td style="text-align: right">
-												<a href="https://github.com/flightaware/dump1090" id="dump1090_version" target="_blank"></a>
-											</td>
-										</tr>
+						<div id="dump1090_infoblock">
+							<table style="width: 100%">
+								<tr class="infoblock_heading">
+									<td>
+										<div class="button buttonTable" id="show_map_button"><span class="buttonText">Show Map</span></div>
+										<div class="buttonSmall buttonTable" id="min_col_button" title="Minimum Columns"><span class="buttonTextSmall">Min</span></div>
+										<div class="buttonSmall buttonTable" id="med_col_button" title="Medium Columns"><span class="buttonTextSmall">Med</span></div>
+										<div class="buttonSmall buttonTable" id="max_col_button" title="Maximum Columns"><span class="buttonTextSmall">Max</span></div>
+                                                             		</td>
+									<td style="text-align:center">
+                                                                     		<div style="float:left" align=left class="button buttonTable" id="pause60"><span class="buttonText">Pause 60s</span></div>
+										<div style="display:inline;float:right"><a href="https://github.com/flightaware/dump1090" id="dump1090_version" target="_blank"></a></div>
+									</td>
+								</tr>
+                                                        	<tr class="infoblock_body">
+                                                                	<td><span class="infoBlockTitleText">Refresh:</span> <span id="refresh_rate">1s</span></td>
+                                                                	<td><span class="infoBlockTitleText">RSSI max/avg/min:</span> <span id="rssi_values">0/0/0  dBFS</span></td>
+                                                        	</tr>
+								<tr class="infoblock_body">
+									<td><span class="infoBlockTitleText">Total Aircraft:</span> <span id="dump1090_total_ac">n/a</span></td>
+									<td><span class="infoBlockTitleText">Messages:</span> <span id="dump1090_message_rate">n/a</span>/sec</td>
+								</tr>
 			
-										<tr class="infoblock_body">
-											<td><span class="infoBlockTitleText">Total Aircraft:</span> <span id="dump1090_total_ac">n/a</span></td>
-											<td><span class="infoBlockTitleText">Messages:</span> <span id="dump1090_message_rate">n/a</span>/sec</td>
-										</tr>
+								<tr class="infoblock_body">
+									<td><span class="infoBlockTitleText">With Positions:</span> <span id="dump1090_total_ac_positions">n/a</span></td>
+									<td><span class="infoBlockTitleText">History:</span> <span id="dump1090_total_history">n/a</span> positions (<span id="dump1090_total_planes">n/a</span> total aircraft)</td>
+								</tr>
+							</table>
+						</div> <!-- dump1090_infoblock -->
+
+						<div id="hide_offscreen" style="display:inline">
+							<div style="display:inline-block" class="settingsCheckbox" id="hide_offscreen_checkbox"></div>
+							<div style="display:inline"> <span>Hide offscreen planes</span> </div>
+						</div>
 			
-										<tr class="infoblock_body">
-											<td><span class="infoBlockTitleText">With Positions:</span> <span id="dump1090_total_ac_positions">n/a</span></td>
-											<td><span class="infoBlockTitleText">History:</span> <span id="dump1090_total_history">n/a</span> positions</td>
-										</tr>
-									</table>
-								</div> <!-- dump1090_infoblock -->
-			
-								<form id="altitude_filter_form">
-									<label><span class="infoBlockTitleText">Filter by Altitude:</span></label>
-									<input id="altitude_filter_min" name="minAltitude" type="text" class="altitudeFilterInput" maxlength="5">
-									<label for="minAltitude" class="altitudeUnit"></label>
-									<span> to </span>
-									<input id="altitude_filter_max" name="maxAltitude" type="text" class="altitudeFilterInput" maxlength="5">
-									<label for="maxAltitude" class="altitudeUnit"></label>
-									<button type="submit">Filter</button>
-									<button id="altitude_filter_reset_button">Reset</button>
-								</form>
+						<form id="altitude_filter_form">
+							<label><span class="infoBlockTitleText">Filter by Altitude:</span></label>
+							<input id="altitude_filter_min" name="minAltitude" type="text" class="altitudeFilterInput" maxlength="5">
+							<label for="minAltitude" class="altitudeUnit"></label>
+							<span> to </span>
+							<input id="altitude_filter_max" name="maxAltitude" type="text" class="altitudeFilterInput" maxlength="5">
+							<label for="maxAltitude" class="altitudeUnit"></label>
+							<button type="submit">Filter</button>
+							<button id="altitude_filter_reset_button">Reset</button>
+						</form>
 			
 								<div id="planes_table">
 									<table id="tableinfo" style="width: 100%">
@@ -211,14 +265,14 @@
 												<td id="icao" onclick="sortByICAO();">ICAO</td>
 												<td id="flag" onclick="sortByCountry()"><!-- column for flag image --></td>
 												<td id="flight" onclick="sortByFlight();">Ident</td>
-												<td id="registration" onclick="sortByRegistration();">Registration</td>
+												<td id="registration" onclick="sortByRegistration();">Reg</td>
 												<td id="aircraft_type" onclick="sortByAircraftType();"> Aircraft type</td>
 												<td id="squawk" onclick="sortBySquawk();">Squawk</td>
-												<td id="altitude" onclick="sortByAltitude();">Altitude (<span class="altitudeUnit"></span>)</td>
+												<td id="altitude" onclick="sortByAltitude();">Alt (<span class="altitudeUnit"></span>)</td>
 												<td id="speed" onclick="sortBySpeed();">Speed (<span class="speedUnit"></span>)</td>
-												<td id="vert_rate" onclick="sortByVerticalRate();">Vertical Rate (<span class="verticalRateUnit"></span>)</td>
-												<td id="distance" onclick="sortByDistance();">Distance (<span class="distanceUnit"></span>)</td>
-												<td id="track" onclick="sortByTrack();">Heading</td>
+												<td id="vert_rate" onclick="sortByVerticalRate();">V.Rate (<span class="verticalRateUnit"></span>)</td>
+												<td id="distance" onclick="sortByDistance();">Dist. (<span class="distanceUnit"></span>)</td>
+												<td id="track" onclick="sortByTrack();">Head</td>
 												<td id="msgs" onclick="sortByMsgs();">Msgs</td>
 												<td id="seen" onclick="sortBySeen();">Age</td>
 												<td id="rssi" onclick="sortByRssi();">RSSI</td>
@@ -233,7 +287,7 @@
 										<tbody>
 											<tr id="plane_row_template" class="plane_table_row hidden">
 												<td class="icaoCodeColumn">ICAO</td>
-												<td><img style="width: 20px; height=12px" src="about:blank" alt="Flag"></td>
+												<td><img style="width: 20px; height=12px" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Flag"></td>
 												<td>FLIGHT</td>
 												<td>REGISTRATION</td>
 												<td>AIRCRAFT_TYPE</td>
@@ -255,6 +309,7 @@
 											</tr>
 										</tbody>
 									</table>
+									<div><span id="misc_text" style="font-weight:bold; font-style:italic"></span></div>
 									<div class="legend">
 										<div class="legendBox vPosition"></div>
 										<div class="legendTitle">ADS-B</div>

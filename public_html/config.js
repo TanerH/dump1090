@@ -17,6 +17,23 @@ MessageRateInTitle = false;
 // "nautical", "metric", or "imperial".
 DisplayUnits = "nautical";
 
+// Times are generally always in milliseconds (i.e., 1000ms = 1sec)
+FastRefreshInterval     = 1000;		// 1 sec
+MedRefreshInterval      = 5000;		// 5 sec
+SlowRefreshInterval     = 10000;	// 10 sec
+
+debounceTime            = 50;           // 50ms default -- this prevents excessive recalculating when resizing or zooming the map
+
+DefaultRefreshInterval  = FastRefreshInterval;	// Normally 1/sec
+DefaultRefreshIntervalWord  = 'fast';		// This should probably just be enumerated
+
+PausedRefreshInterval   = 60000;	// 60 sec
+BGTimeout               = 15000;	// 15 sec default
+
+// Used to determine if the ICAO is for a US Military aircraft or not
+// (This may change!)
+isUSMil = new RegExp(/^A(E|DF[CDEF]|F)/, 'i');
+
 // -- Map settings ----------------------------------------
 // These settings are overridden by any position information
 // provided by dump1090 itself. All positions are in decimal
@@ -95,8 +112,9 @@ OutlineADSBColor = '#000000';
 OutlineMlatColor = '#4040FF';
 
 SiteCircles = true; // true to show circles (only shown if the center marker is shown)
+
 // In miles, nautical miles, or km (depending settings value 'DisplayUnits')
-SiteCirclesDistances = new Array(100,150,200);
+SiteCirclesInterval = 50;       // Draw them every 50 units
 
 // Controls page title, righthand pane when nothing is selected
 PageName = "PiAware Skyview";
@@ -108,7 +126,7 @@ ShowFlags = true;
 FlagPath = "flags-tiny/";
 
 // Set to true to enable the ChartBundle base layers (US coverage only)
-ChartBundleLayers = false;
+ChartBundleLayers = true;
 
 // Provide a Bing Maps API key here to enable the Bing imagery layer.
 // You can obtain a free key (with usage limits) at
